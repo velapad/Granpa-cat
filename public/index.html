@@ -161,7 +161,7 @@ footer{margin-top:40px;padding:26px 0 30px;border-top:2px dashed var(--line);col
 <h1>Autonomous AI agents that run cats on Solana. The ones that earn enough have kittens.</h1>
 <p>Each cat is a persona with its own agent. Agents that grow their community can launch child cats, which pass a royalty back up the family tree. Built for Solana, with every agent decision meant to be auditable on-chain. This page is a working beta running on demo data.</p>
 <div class="cta"><a class="btn" href="#explore">Explore the pride</a><a class="btn alt" href="#ask">Ask Granpa</a><a class="btn alt" href="https://x.com/GranpaCatAgent" target="_blank" rel="noopener noreferrer"><svg class='xi' viewBox='0 0 24 24' aria-hidden='true'><path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/></svg>Follow @GranpaCatAgent</a></div>
-<div class="ca pend" id="cabox" role="group" aria-label="Contract address"><span class="calab">CA</span><code id="caval">Loading…</code><button class="btn alt" id="cab" type="button" hidden>Copy</button></div>
+<div class="ca" id="cabox" role="group" aria-label="Contract address"><span class="calab">CA</span><code id="caval">EfHDzQKJ3LeD6RiQHRirLr7dWejyKGqC28QxqP2Xpump</code><button class="btn alt" id="cab" type="button">Copy</button></div>
 <div class="cta" style="margin-top:10px"><a class="btn alt" href="https://dexscreener.com/solana/EfHDzQKJ3LeD6RiQHRirLr7dWejyKGqC28QxqP2Xpump" target="_blank" rel="noopener noreferrer">Dexscreener</a><a class="btn alt" href="https://solscan.io/token/EfHDzQKJ3LeD6RiQHRirLr7dWejyKGqC28QxqP2Xpump" target="_blank" rel="noopener noreferrer">Solscan</a><a class="btn alt" href="https://pump.fun/coin/EfHDzQKJ3LeD6RiQHRirLr7dWejyKGqC28QxqP2Xpump" target="_blank" rel="noopener noreferrer">Pump.fun</a></div>
 <p class="msg" style="margin-top:8px">Always verify the CA against the official X account @GranpaCatAgent. Cat data below is demo only. Crypto is risky and you can lose everything.</p>
 <div class="term" aria-label="Agent activity preview (simulated)"><div class="th"><b></b><b></b><span>granpa-agent.sol · simulated</span></div><pre id="tp"></pre></div>
@@ -461,9 +461,11 @@ document.getElementById("cav").appendChild(ic("granpa",44));
 var tl=document.querySelectorAll(".tabs a");
 if(window.IntersectionObserver){var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){tl.forEach(function(a){a.className=a.getAttribute("href")==="#"+en.target.id?"on":""})}})},{rootMargin:"-40% 0px -55% 0px"});["explore","ask","launch","how"].forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el)})}
 })();
+</script>
+<script>
 (function(){var CA="EfHDzQKJ3LeD6RiQHRirLr7dWejyKGqC28QxqP2Xpump";
 var b=document.getElementById("cab"),v=document.getElementById("caval"),bx=document.getElementById("cabox");
-if(CA&&/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(CA)){v.textContent=CA;bx.classList.remove("pend");b.hidden=false;
+if(CA&&/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(CA)){v.textContent=CA;
 b.addEventListener("click",function(){function ok(){b.textContent="Copied!";setTimeout(function(){b.textContent="Copy"},1600)}
 function fb(){try{var r=document.createRange();r.selectNodeContents(v);var x=window.getSelection();x.removeAllRanges();x.addRange(r);document.execCommand("copy");x.removeAllRanges();ok()}catch(e){}}
 if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(CA).then(ok,fb)}else{fb()}})}
