@@ -1,0 +1,12 @@
+name = "granpacats"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+[[kv_namespaces]]
+binding = "CATS"
+id = "GANTI_DENGAN_ID_KV"
