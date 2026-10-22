@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M12 28 L14 8 L27 19 Z M52 28 L50 8 L37 19 Z' fill='%23e8923a'/%3E%3Cellipse cx='32' cy='37' rx='22' ry='19' fill='%23e8923a'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Granpa Cats AI — Meet the cats run by AI agents</title>
+<meta name="description" content="Chat with AI cat personas, explore the cat family tree, or launch a cat of your own. Granpa Cats AI is a community cat project on Robinhood Chain.">
+<meta name="theme-color" content="#f4efe3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#081113" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Granpa Cats AI">
+<meta property="og:description" content="Meet the cats run by AI agents. Chat with them, explore the family tree, launch your own.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&display=swap">
+<style>
+:root{--bg:#f4efe3;--card:#fffdf7;--ink:#14262a;--muted:#5d6f72;--accent:#e0701a;--teal:#0f8f86;--line:#dcd3bd;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#081113;--card:#0f1d20;--ink:#e6f1f0;--muted:#8fa6a8;--accent:#ff9a2e;--teal:#2fd3c4;--line:#1c3236}}
+:root[data-theme="dark"]{--bg:#081113;--card:#0f1d20;--ink:#e6f1f0;--muted:#8fa6a8;--accent:#ff9a2e;--teal:#2fd3c4;--line:#1c3236}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+h1,h2,.logo{font-family:Bungee,Impact,"Arial Black",sans-serif;font-weight:400;line-height:1.1;margin:0}
+nav{display:flex;flex-wrap:wrap;gap:6px 0;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{color:var(--accent);font-size:1.15rem}
+nav a{color:var(--muted);text-decoration:none;margin-left:16px;font-weight:600;font-size:.92rem}
+.tag{font-size:.7rem;color:var(--teal);border:1px solid var(--teal);border-radius:6px;padding:1px 6px;margin-left:12px;font-weight:700}
+.hero h1{font-size:clamp(1.9rem,7.4vw,3.3rem);max-width:760px}
+.hero h1 span{color:var(--accent)}
+.hero p{max-width:620px;color:var(--muted);margin:16px 0 22px}
+.btn{display:inline-block;border:0;cursor:pointer;background:var(--accent);color:#fff;padding:12px 24px;border-radius:12px;font:700 .98rem system-ui,sans-serif;text-decoration:none}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.gens{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:26px 0 8px}
+.gen{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--muted);font-size:.93rem}
+.gen b{display:block;color:var(--teal);font-family:Bungee,Impact,sans-serif;font-weight:400;margin-bottom:2px}
+section{padding:30px 0}
+h2{font-size:clamp(1.4rem,5vw,1.9rem);margin-bottom:14px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+input,select,textarea{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;min-width:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);border-color:transparent}
+.bar input{flex:1 1 200px}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:var(--card);color:var(--muted);padding:10px 14px;font:600 .9rem system-ui,sans-serif;cursor:pointer}
+.seg button.on{background:var(--teal);color:#06201d}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.cat .top{display:flex;justify-content:space-between;align-items:center}
+.cat .em{font-size:2rem}
+.pill{font-size:.72rem;font-weight:700;color:var(--teal);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.cat h3{margin:8px 0 0;font-size:1.05rem}
+.cat .sym{color:var(--accent);font-weight:700;font-size:.85rem}
+.cat p{margin:8px 0 10px;color:var(--muted);font-size:.88rem}
+.cat .mc{font:600 .8rem ui-monospace,Menlo,monospace;color:var(--muted)}
+.tree,.tree ul{list-style:none;margin:0;padding-left:22px;border-left:2px solid var(--line)}
+.tree{padding-left:0;border:0}
+.tree li{margin:8px 0;position:relative}
+.tree .node{display:inline-flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 12px}
+.empty{color:var(--muted);padding:20px 0}
+.launch{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;display:grid;gap:12px}
+.launch .two{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+.launch label{font-size:.82rem;font-weight:700;color:var(--muted);display:grid;gap:4px}
+textarea{min-height:90px;resize:vertical}
+.msg{font-size:.85rem;color:var(--muted);min-height:1.2em}
+.how{display:grid;gap:10px;padding:0;margin:0;list-style:none}
+.how li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;color:var(--muted)}
+.how b{color:var(--ink)}
+.chat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px}
+#clog{height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px}
+.cm{max-width:85%;padding:9px 13px;border-radius:16px;white-space:pre-wrap;word-wrap:break-word}
+.cm.g{align-self:flex-start;background:var(--bg);border:1px solid var(--line)}
+.cm.u{align-self:flex-end;background:var(--accent);color:#fff}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 12px;font:600 .82rem system-ui,sans-serif;cursor:pointer}
+#cf{display:flex;gap:8px}#cf input{flex:1}
+.cc{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.cclog{max-height:300px;min-height:60px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.ccf{display:flex;gap:8px}.ccf input{flex:1}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 -18px;padding:10px 18px;background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.bn{font-family:Bungee,Impact,"Arial Black",sans-serif;font-size:1.05rem;letter-spacing:.02em;color:var(--ink);white-space:nowrap}
+.bn b{font-weight:400;color:var(--accent)}
+nav.top .tag{margin:0}
+.hero{position:relative;padding:30px 0 22px}
+.hero::before{content:"";position:absolute;inset:0 -18px auto -18px;height:520px;z-index:-1;pointer-events:none;background:radial-gradient(55% 80% at 15% 0%,rgba(224,112,26,.20),transparent 70%),radial-gradient(50% 70% at 95% 5%,rgba(15,143,134,.18),transparent 70%)}
+.pile{display:flex;align-items:center;margin:0 0 20px}
+.pb{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--card);border:2px solid var(--line);margin-left:-14px;box-shadow:0 6px 16px rgba(0,0,0,.14)}
+.pb:first-child{margin-left:0}.pb:nth-child(3){border-color:var(--accent);z-index:2}
+.hero .lead{font-size:1.06rem;max-width:560px;margin:14px 0 22px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;max-width:460px}
+.cta .btn,.cta .btn.alt{flex:1 1 150px;text-align:center;margin:0;padding:14px 20px}
+.ca{display:block;max-width:620px;margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:.82rem;min-height:0}
+.ca code{font:600 .78rem ui-monospace,Menlo,monospace;color:var(--ink)}
+.gen{border-left:4px solid var(--teal)}
+@media (max-width:640px){.gens{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory;margin-right:-18px;padding-right:18px;padding-bottom:6px}.gen{flex:0 0 76%;scroll-snap-align:start}}
+section h2{display:flex;align-items:center;gap:10px}
+section h2::before{content:"";flex:none;width:6px;height:1.05em;border-radius:3px;background:var(--accent)}
+.cat{transition:transform .15s,border-color .15s}
+.cat:hover{transform:translateY(-2px);border-color:var(--teal)}
+body{padding-bottom:calc(74px + env(safe-area-inset-bottom,0px))}
+.dt{position:fixed;inset:0;z-index:100;background:var(--bg);overflow-y:auto;padding:calc(14px + env(safe-area-inset-top,0px)) 18px calc(30px + env(safe-area-inset-bottom,0px))}
+.dt[hidden]{display:none}
+.dtin{max-width:760px;margin:0 auto}
+.dtin>.btn.alt{margin:0 0 14px}
+.dh{display:flex;gap:14px;align-items:center;margin-bottom:6px}
+.dh .em{font-size:3rem}
+.dh h2{margin:0}
+.dh .sym{color:var(--accent);font-weight:700}
+.dsec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.dsec h3{font-family:Bungee,Impact,sans-serif;font-weight:400;font-size:1rem;color:var(--teal);margin:0 0 8px}
+.dsec p{margin:0;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:1rem}.stat span{color:var(--muted);font-size:.78rem}
+.log{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.log li{border-left:3px solid var(--teal);padding:2px 0 2px 10px;font-size:.92rem}
+.log small{display:block;color:var(--muted);font:600 .72rem ui-monospace,Menlo,monospace;word-break:break-all}
+.lin{display:flex;flex-wrap:wrap;gap:8px}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:space-around;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line)}
+.tabs a{flex:1;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);text-decoration:none;font:600 .72rem system-ui,sans-serif;padding:4px 0;border-radius:12px}
+.tabs a i{font-style:normal;font-size:1.3rem;line-height:1}
+.tabs a.on{color:var(--accent)}
+.tabs a i{display:flex}
+.chip{display:inline-flex;align-items:center;gap:6px}
+footer{border-top:1px solid var(--line);margin-top:24px;padding:22px 0 30px;color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="top"><span class="brand"><span id="lm" aria-hidden="true"></span><span class="bn">Granpa <b>Cats</b> AI</span></span><span class="tag">BETA</span></nav>
+<div id="dt" class="dt" hidden role="dialog" aria-label="Cat profile"><div class="dtin"><button class="btn alt" id="dtb" type="button">← Back</button><div id="dtc"></div></div></div>
+<div class="tabs" role="navigation" aria-label="Sections"><a href="#explore" class="on"><i><svg viewBox='0 0 24 24' width='22' height='22' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><rect x='3' y='3' width='7' height='7' rx='1.5'/><rect x='14' y='3' width='7' height='7' rx='1.5'/><rect x='3' y='14' width='7' height='7' rx='1.5'/><rect x='14' y='14' width='7' height='7' rx='1.5'/></svg></i>Explore</a><a href="#ask"><i><svg viewBox='0 0 24 24' width='22' height='22' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z'/></svg></i>Ask</a><a href="#launch"><i><svg viewBox='0 0 24 24' width='22' height='22' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><circle cx='12' cy='12' r='9'/><path d='M12 8v8M8 12h8'/></svg></i>Launch</a><a href="#how"><i><svg viewBox='0 0 24 24' width='22' height='22' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><circle cx='12' cy='12' r='9'/><path d='M12 11v5M12 8h.01'/></svg></i>How</a></div>
+
+<header class="hero">
+<div class="pile" id="pile" aria-hidden="true"></div>
+<h1>Meet the cats run by <span>AI agents</span></h1>
+<p class="lead">Every cat has its own AI persona you can chat with. Explore the family tree, or launch a cat of your own. Only $GCAT is a token. The other cats are profiles.</p>
+<div class="cta"><a class="btn" href="#explore">Explore cats</a><a class="btn alt" href="#ask">Ask Granpa</a></div>
+<p class="msg ca" id="ca">Contract: TBA. $GCAT has not been launched yet.</p>
+<div class="gens">
+<div class="gen"><b>Gen 0</b>A person names a cat and writes its persona.</div>
+<div class="gen"><b>Gen 1</b>Planned: the agent builds a community, then launches kittens.</div>
+<div class="gen"><b>Gen 2</b>Each kitten gets its own agent and can do the same.</div>
+</div>
+</header>
+
+<section id="explore">
+<h2>The pride</h2>
+<div class="bar">
+<input id="s" type="search" placeholder="Search by name or symbol" aria-label="Search">
+<select id="o" aria-label="Sort"><option value="new">Newest</option><option value="gen">Generation</option></select>
+<div class="seg"><button id="vg" class="on" type="button">Grid</button><button id="vt" type="button">Family tree</button></div>
+</div>
+<div id="out"></div>
+<p class="msg">Tap a cat to open its profile and chat with it. Only $GCAT is a token. Other cats are profiles without tokens.</p>
+</section>
+
+<section id="ask">
+<h2>Ask Granpa</h2>
+<div class="chat">
+<div id="clog" aria-live="polite"></div>
+<div class="chips" id="cchips"></div>
+<form id="cf"><input id="cq" placeholder="Ask Granpa anything…" autocomplete="off" maxlength="400"><button class="btn" id="cb" type="submit">Send</button></form>
+</div>
+<p class="msg">AI-generated and for fun. Not financial advice. Crypto is risky.</p>
+</section>
+
+<section id="launch">
+<h2>Launch a cat</h2>
+<div class="launch">
+<div class="two"><label>Name<input id="n" maxlength="30" placeholder="Granpa Whiskers"></label><label>Symbol<input id="y" maxlength="8" placeholder="WHISK"></label></div>
+<label>Agent persona<textarea id="p" maxlength="400" placeholder="Describe how this cat talks and acts…"></textarea></label>
+<label>Parent cat (optional)<select id="pr"><option value="">None (Gen 0)</option></select></label>
+<div><button class="btn" id="ai" type="button">Write persona with AI</button><button class="btn alt" id="lb" type="button">Launch cat</button></div>
+<p class="msg" style="margin:0">Launching adds a profile to the pride. It does not create a real token.</p>
+<div class="msg" id="m"></div>
+</div>
+</section>
+
+<section id="how">
+<h2>How it works</h2>
+<ul class="how">
+<li><b>One persona per cat.</b> Each cat has a persona that powers its chat agent, which follows limits set by the platform.</li>
+<li><b>Open decisions.</b> The plan is for every agent decision to be logged so anyone can audit what a cat did.</li>
+<li><b>Kittens.</b> Cats that earn enough can launch child cats, forming a family tree with royalties passed upward.</li>
+<li><b>Status.</b> The only token is $GCAT on Robinhood Chain, launched through Pons, and its contract is shown at the top of this page once launched. Community cats are profiles without tokens. Kitten launches, royalties and decision logs are plans, not live features. This site never holds your funds.</li>
+</ul>
+</section>
+
+<footer>Tokens and meme coins can lose all their value. Nothing here is investment advice. Not affiliated with, endorsed by, or sponsored by Robinhood Markets, Inc. or Pons. Inspired by the agent-family concept; original design by Granpa Cats AI. granpacats.xyz</footer>
+</div>
+
+<script>
+window.claude=window.claude||{use:function(n){
+if(n!=="sample")return Promise.resolve(null);
+return Promise.resolve(function(prompt,o){
+var body;
+if(prompt.indexOf("You are Granpa")===0){
+var a=prompt.indexOf("Conversation so far:\n")+21,b=prompt.indexOf("\n\nReply as Granpa now");
+body={mode:"chat",text:prompt.slice(a,b)};
+}else body={mode:"persona",text:prompt};
+return fetch("/api/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}).then(function(r){
+return r.json().catch(function(){return {}}).then(function(j){
+if(!r.ok||!j.text)throw {code:r.status===429?"rate_limited":"error"};
+if(o&&o.onText)o.onText({text:j.text});
+return {text:j.text};
+});
+});
+});
+}};
+</script>
+<script>
+(function(){
+var CA="",LURL="",LIVE=null;
+var AV={
+granpa:{f:"#9aa3ad",a:"glasses"},
+tuna:{f:"#e8923a",a:"fish"},
+hat:{f:"#e9dcc3",a:"hat"},
+mitt:{f:"#f1ece2",a:"scarf"},
+yarn:{f:"#b98a5a",a:"yarn"},
+moon:{f:"#4b4f63",a:"moon",eye:"#f2d16b",w:"#e6e0d0"},
+box:{f:"#d9b27a",a:"box"}
+};
+function ic(k,sz){
+var sp=document.createElement("span");sp.style.cssText="display:inline-flex;line-height:0;flex:none";
+var v=AV[k],S="<svg viewBox='0 0 64 64' width='"+sz+"' height='"+sz+"' aria-hidden='true'>";
+if(!v){
+S+="<g style='fill:var(--accent)'><ellipse cx='32' cy='42' rx='12' ry='10'/><ellipse cx='16' cy='28' rx='5' ry='6.5'/><ellipse cx='27' cy='19' rx='5' ry='7'/><ellipse cx='38' cy='19' rx='5' ry='7'/><ellipse cx='49' cy='28' rx='5' ry='6.5'/></g>";
+}else{
+var F=v.f,E=v.eye||"#1c1410",W=v.w||"#1c1410",K="stroke='rgba(28,20,16,.5)' stroke-width='1.5' stroke-linejoin='round'";
+if(v.a==="box")S+="";
+S+="<path d='M12 28 L14 8 L27 19 Z' fill='"+F+"' "+K+"/><path d='M52 28 L50 8 L37 19 Z' fill='"+F+"' "+K+"/>";
+S+="<path d='M16 24 L16.5 13 L23 19 Z' fill='#f2b6b0'/><path d='M48 24 L47.5 13 L41 19 Z' fill='#f2b6b0'/>";
+S+="<ellipse cx='32' cy='37' rx='22' ry='19' fill='"+F+"' "+K+"/>";
+S+="<circle cx='24' cy='35' r='2.6' fill='"+E+"'/><circle cx='40' cy='35' r='2.6' fill='"+E+"'/>";
+S+="<path d='M29.5 40.5 h5 l-2.5 3 z' fill='#e58a8a'/>";
+S+="<path d='M32 43.5 v2 M32 45.5 q-3 2.5 -6 .5 M32 45.5 q3 2.5 6 .5' stroke='"+W+"' stroke-width='1.4' fill='none' stroke-linecap='round'/>";
+S+="<path d='M20 43 L7 41 M20 46 L8 50 M44 43 L57 41 M44 46 L56 50' stroke='"+W+"' stroke-width='1.2' stroke-linecap='round'/>";
+var a=v.a;
+if(a==="glasses")S+="<g fill='none' stroke='#1c1410' stroke-width='1.8'><circle cx='24' cy='35' r='6.5'/><circle cx='40' cy='35' r='6.5'/><path d='M30.5 35 h3'/></g>";
+if(a==="fish")S+="<path d='M40 56 q8 -8 16 0 q-8 8 -16 0 z' fill='#4aa8c8' "+K+"/><path d='M56 56 l6 -5 v10 z' fill='#4aa8c8' "+K+"/><circle cx='44' cy='55' r='1.2' fill='#1c1410'/>";
+if(a==="hat")S+="<rect x='21' y='1' width='22' height='15' rx='2' fill='#2b2b33'/><rect x='13' y='15' width='38' height='4.5' rx='2' fill='#2b2b33'/><rect x='21' y='11' width='22' height='3.5' fill='#d9772b'/>";
+if(a==="scarf")S+="<path d='M13 52 q19 9 38 0 l1 6 q-20 9 -40 0 z' fill='#d94f4f'/><path d='M44 56 l4 8 h-6 z' fill='#d94f4f'/>";
+if(a==="yarn")S+="<circle cx='50' cy='53' r='9' fill='#d94f7a' "+K+"/><path d='M43 51 q7 -3 14 2 M43 56 q7 -3 13 1 M47 46 q4 6 0 14' stroke='#f3b6c8' stroke-width='1.2' fill='none'/>";
+if(a==="moon")S+="<path d='M52 4 a10 10 0 1 0 8 13 a8 8 0 0 1 -8 -13 z' fill='#f2d16b'/>";
+if(a==="box")S+="<path d='M6 46 h52 l-3 16 h-46 z' fill='#c9985a' "+K+"/><path d='M6 46 h52' stroke='#8a6234' stroke-width='2'/>";
+}
+sp.innerHTML=S+"</svg>";return sp;
+}
+var D=[
+{id:1,n:"Granpa Prime",y:"GCAT",g:0,p:null,e:"granpa",d:"The original. Naps in the sun, speaks in riddles."},
+{id:2,n:"Tuna Baron",y:"TUNA",g:1,p:1,e:"tuna",d:"Obsessed with fish and tiny spreadsheets."},
+{id:3,n:"Sir Purrsalot",y:"PURR",g:1,p:1,e:"hat",d:"Fancy cat, writes formal meme poetry."},
+{id:4,n:"Mittens Jr",y:"MITT",g:2,p:2,e:"mitt",d:"Eager kitten, over-explains everything."},
+{id:5,n:"Yarn Oracle",y:"YARN",g:2,p:3,e:"yarn",d:"Predicts nothing, tangles everything."},
+{id:6,n:"Night Whisker",y:"NWSK",g:1,p:1,e:"moon",d:"Only posts after midnight."},
+{id:7,n:"Box Philosopher",y:"BOX",g:2,p:6,e:"box",d:"If it fits, it ponders."}
+];
+var st={q:"",o:"new",v:"grid"},out=document.getElementById("out");
+function card(c){
+var a=document.createElement("div");a.className="cat";
+var t=document.createElement("div");t.className="top";
+var e=ic(c.e,40);e.className="em";
+var p=document.createElement("span");p.className="pill";p.textContent="Gen "+c.g;
+t.appendChild(e);t.appendChild(p);a.appendChild(t);
+var h=document.createElement("h3");h.textContent=c.n;a.appendChild(h);
+var s=document.createElement("div");s.className="sym";s.textContent="$"+c.y;a.appendChild(s);
+var d=document.createElement("p");d.textContent=c.d;a.appendChild(d);
+var m=document.createElement("div");m.className="mc";m.textContent=mcTxt(c);a.appendChild(m);
+return a}
+function list(){
+var q=st.q.toLowerCase(),r=D.filter(function(c){return !q||c.n.toLowerCase().indexOf(q)>-1||c.y.toLowerCase().indexOf(q)>-1});
+r.sort(function(a,b){return st.o==="mc"?b.m-a.m:st.o==="gen"?a.g-b.g||b.m-a.m:b.id-a.id});return r}
+function kids(pid,set){
+var ul=document.createElement("ul"),n=0;
+D.forEach(function(c){if(c.p===pid&&set[c.id]){n++;var li=document.createElement("li"),nd=document.createElement("span");nd.className="node";nd.appendChild(ic(c.e,22));nd.appendChild(document.createTextNode(" "+c.n+" · $"+c.y+" · Gen "+c.g));li.appendChild(nd);var k=kids(c.id,set);if(k)li.appendChild(k);ul.appendChild(li)}});
+return n?ul:null}
+function render(){
+var r=list();out.textContent="";
+if(!r.length){var e=document.createElement("div");e.className="empty";e.textContent="No cats found.";out.appendChild(e);return}
+if(st.v==="grid"){var g=document.createElement("div");g.className="grid";r.forEach(function(c){g.appendChild(card(c))});out.appendChild(g)}
+else{
+var set={};r.forEach(function(c){set[c.id]=1});
+var roots=r.filter(function(c){return c.p===null||!set[c.p]}),ul=document.createElement("ul");ul.className="tree";
+roots.forEach(function(c){var li=document.createElement("li"),nd=document.createElement("span");nd.className="node";nd.appendChild(ic(c.e,22));nd.appendChild(document.createTextNode(" "+c.n+" · $"+c.y+" · Gen "+c.g));li.appendChild(nd);var k=kids(c.id,set);if(k)li.appendChild(k);ul.appendChild(li)});
+out.appendChild(ul)}
+}
+document.getElementById("s").addEventListener("input",function(e){st.q=e.target.value;render()});
+document.getElementById("o").addEventListener("change",function(e){st.o=e.target.value;render()});
+var vg=document.getElementById("vg"),vt=document.getElementById("vt");
+function sv(v){st.v=v;vg.className=v==="grid"?"on":"";vt.className=v==="tree"?"on":"";render()}
+vg.onclick=function(){sv("grid")};vt.onclick=function(){sv("tree")};
+render();
+
+var ai=document.getElementById("ai"),msg=document.getElementById("m"),pe=document.getElementById("p");
+ai.addEventListener("click",function(){
+var nm=document.getElementById("n").value.trim()||"a mysterious cat",sy=document.getElementById("y").value.trim();
+msg.textContent="Granpa is thinking…";ai.disabled=true;
+claude.use("sample").then(function(s){
+if(!s){msg.textContent="AI persona writing is not available in this view.";ai.disabled=false;return}
+return s("Write a funny, in-character persona (max 60 words, English) for an AI agent that runs a meme cat character named "+nm+(sy?" with symbol "+sy:"")+". Give it a voice and one quirk. Do not give financial advice, price predictions, or promise profit. Reply with the persona text only.",{cache:false,modelTier:"quick"}).then(function(r){pe.value=(r&&r.text||"").trim();msg.textContent="Persona written. Edit it however you like."})
+}).catch(function(e){msg.textContent=e&&e.code==="rate_limited"?"Too many requests. Try again in a bit.":e&&e.code==="not_granted"?"Permission was not granted for AI writing.":"Could not write a persona. Try again."}).then(function(){ai.disabled=false});
+});
+
+/* Ask Granpa */
+var SYS="You are Granpa, the wise, sleepy old cat mascot of Granpa Cats AI. Never give financial advice or invent facts about the token.";
+var clog=document.getElementById("clog"),cf=document.getElementById("cf"),cq=document.getElementById("cq"),cb=document.getElementById("cb"),cch=document.getElementById("cchips");
+var hist=[],busy=false,smp=null;
+function cadd(c,t){var d=document.createElement("div");d.className="cm "+c;d.textContent=t;clog.appendChild(d);clog.scrollTop=clog.scrollHeight;return d}
+cadd("g","Meow. I am Granpa. I have seen many bull runs and many naps. Ask me about the cats, the family tree, or how to not get scammed.");
+["What is Granpa Cats AI?","How do cat kittens work?","How do I avoid crypto scams?","Tell me a cat meme idea"].forEach(function(t){var c=document.createElement("button");c.type="button";c.className="chip";c.textContent=t;c.onclick=function(){cq.value=t;cf.requestSubmit()};cch.appendChild(c)});
+function nap(){cadd("g","Granpa is napping. The AI agent is not available in this view.");cb.disabled=true}
+try{claude.use("sample").then(function(s){smp=s;if(!s)nap()},nap)}catch(e){nap()}
+cf.addEventListener("submit",function(e){
+e.preventDefault();var t=cq.value.trim();if(!t||busy||!smp)return;
+cq.value="";cch.style.display="none";cadd("u",t);hist.push({r:"Visitor",t:t});
+var o=cadd("g","…");busy=true;cb.disabled=true;
+var tr=hist.slice(-12).map(function(h){return h.r+": "+h.t}).join("\n");
+smp(SYS+"\n\nConversation so far:\n"+tr+"\n\nReply as Granpa now (reply text only, no name prefix).",{cache:false,modelTier:"quick",onText:function(x){if(x&&x.text){o.textContent=x.text;clog.scrollTop=clog.scrollHeight}}}).then(function(r){
+var tx=(r&&r.text||"").trim()||"Purr… I have nothing to say.";o.textContent=tx;hist.push({r:"Granpa",t:tx})
+}).catch(function(er){
+var c=er&&er.code;o.textContent=c==="rate_limited"?"Too many questions. Granpa needs a nap. Try again in a bit.":c==="not_granted"?"Granpa cannot answer without permission. Allow the request and try again.":"Hiss. Something went wrong. Try again.";hist.pop()
+}).then(function(){busy=false;cb.disabled=!smp;cq.focus()});
+});
+
+/* Cat profile pages */
+function h(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function hx(s){var n=5381;for(var i=0;i<s.length;i++)n=((n<<5)+n+s.charCodeAt(i))>>>0;return n.toString(16).padStart(8,"0")}
+var dt=document.getElementById("dt"),dtc=document.getElementById("dtc");
+function closeCat(){dt.hidden=true;document.body.style.overflow=""}
+document.getElementById("dtb").addEventListener("click",closeCat);
+window.addEventListener("keydown",function(e){if(e.key==="Escape"&&!dt.hidden)closeCat()});
+function chipTo(c,label){var b=h("button","chip");b.appendChild(document.createTextNode(label));b.appendChild(ic(c.e,18));b.appendChild(document.createTextNode(" "+c.n));b.type="button";b.onclick=function(){openCat(c.id)};return b}
+var CH={};
+function catChat(c,box){
+var st5=CH[c.id]||(CH[c.id]={h:[],busy:false});
+var cc=h("div","cc"),lg=h("div","cclog"),fm2=h("form","ccf"),inp=h("input"),bt=h("button","btn","Send");
+lg.setAttribute("aria-live","polite");inp.placeholder="Say something to "+c.n+"\u2026";inp.maxLength=300;inp.autocomplete="off";bt.type="submit";
+function add(k,t){var d=h("div","cm "+k,t);lg.appendChild(d);lg.scrollTop=lg.scrollHeight;return d}
+add("g","*"+c.n+" blinks at you slowly.* Go on, say something.");
+st5.h.forEach(function(m){add(m.r===c.n?"g":"u",m.t)});
+fm2.appendChild(inp);fm2.appendChild(bt);cc.appendChild(lg);cc.appendChild(fm2);box.appendChild(cc);
+fm2.addEventListener("submit",function(e){
+e.preventDefault();var t=inp.value.trim();if(!t||st5.busy)return;
+inp.value="";add("u",t);st5.h.push({r:"Visitor",t:t});
+var o=add("g","\u2026");st5.busy=true;bt.disabled=true;
+var tr=st5.h.slice(-10).map(function(m){return m.r+": "+m.t}).join("\n");
+fetch("/api/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"cat",name:c.n,sym:c.y,persona:c.d,text:tr})}).then(function(r){
+return r.json().catch(function(){return {}}).then(function(j){if(!r.ok||!j.text)throw {code:r.status===429?"rate_limited":"error"};return j.text})
+}).then(function(tx){o.textContent=tx;st5.h.push({r:c.n,t:tx})}).catch(function(er){
+o.textContent=er&&er.code==="rate_limited"?c.n+" needs a nap. Try again in a bit.":"Hiss. This cat can only chat on the live site.";st5.h.pop()
+}).then(function(){st5.busy=false;bt.disabled=false;lg.scrollTop=lg.scrollHeight});
+});
+}
+function openCat(id){
+var c=D.filter(function(x){return x.id===id})[0];if(!c)return;
+var par=D.filter(function(x){return x.id===c.p})[0],kd=D.filter(function(x){return x.p===c.id});
+dtc.textContent="";
+var hd=h("div","dh");hd.appendChild(ic(c.e,56));var w=h("div");w.appendChild(h("h2",null,c.n));w.appendChild(h("div","sym","$"+c.y+" · Gen "+c.g));hd.appendChild(w);dtc.appendChild(hd);
+var s1=h("div","dsec");s1.appendChild(h("h3",null,"Agent persona"));s1.appendChild(h("p",null,c.d+" It stays in character, follows its limits, and never gives financial advice."));dtc.appendChild(s1);
+var s2=h("div","dsec");s2.appendChild(h("h3",null,"Agent stats"));var g=h("div","stats");
+[[mcTxt(c),c.y==="GCAT"?"Market cap":"Token"],["Gen "+c.g,"Generation"],[String(kd.length),"Child cats"]].forEach(function(r){var st2=h("div","stat");st2.appendChild(h("b",null,r[0]));st2.appendChild(h("span",null,r[1]));g.appendChild(st2)});
+s2.appendChild(g);dtc.appendChild(s2);
+var s3=h("div","dsec");s3.appendChild(h("h3",null,"Family"));var ln=h("div","lin");
+if(par)ln.appendChild(chipTo(par,"Parent: "));kd.forEach(function(k){ln.appendChild(chipTo(k,"Kitten: "))});
+if(!par&&!kd.length)ln.appendChild(h("p",null,"No family yet."));
+s3.appendChild(ln);dtc.appendChild(s3);
+var s5=h("div","dsec");s5.appendChild(h("h3",null,"Chat with "+c.n));catChat(c,s5);s5.appendChild(h("p",null,"AI-generated in the voice of this cat's persona. For fun only. Not financial advice."));s5.lastChild.style.cssText="margin-top:8px;font-size:.82rem";dtc.appendChild(s5);
+var s4=h("div","dsec");s4.appendChild(h("h3",null,"Decision log"));s4.appendChild(h("p",null,"Planned. Agent decisions are not logged on-chain yet."));dtc.appendChild(s4);
+dt.hidden=false;dt.scrollTop=0;document.body.style.overflow="hidden";
+}
+function decorate(){
+var by={};D.forEach(function(c){by[c.y]=c});
+out.querySelectorAll(".cat,.node").forEach(function(el){
+var m=el.classList.contains("cat")?el.querySelector(".sym").textContent.slice(1):(el.textContent.match(/\$([A-Z]+)/)||[])[1],c=by[m];if(!c)return;
+el.style.cursor="pointer";el.setAttribute("role","button");el.tabIndex=0;
+el.onclick=function(){openCat(c.id)};el.onkeydown=function(e){if(e.key==="Enter")openCat(c.id)};
+});
+}
+var _render=render;render=function(){_render();decorate()};render();
+
+/* Community launches */
+var store=null;
+function getStore(){
+if(store)return Promise.resolve(store);
+var cl=typeof claude!=="undefined"?claude:null;
+function u(n){return cl?cl.use(n).catch(function(){return null}):Promise.resolve(null)}
+return Promise.all([u("db"),u("user")]).then(function(r){
+var db=r[0],us=r[1];
+if(db&&us){
+store={list:function(){return db.collection("cats").limit(200).get().then(function(sn){return sn.docs.map(function(d){return d.data()})})},
+add:function(c){return us.id().then(function(id){if(!id)throw {code:"signin"};return db.doc("cats/"+id).set(c)})}};
+}else{
+store={list:function(){return fetch("/api/cats").then(function(x){return x.ok?x.json():{cats:[]}}).then(function(j){return j.cats||[]})},
+add:function(c){return fetch("/api/cats",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(c)}).then(function(x){if(x.ok)return;throw {code:x.status===429?"rate_limited":x.status===409?"taken":"error"}})}};
+}
+return store;
+});
+}
+var pr=document.getElementById("pr"),lb=document.getElementById("lb");
+function fillParents(){
+var cur=pr.value;pr.textContent="";
+var o0=h("option",null,"None (Gen 0)");o0.value="";pr.appendChild(o0);
+D.filter(function(c){return c.g<3}).forEach(function(c){var o=h("option",null,c.n+" (Gen "+c.g+")");o.value=c.id;pr.appendChild(o)});
+pr.value=cur;
+}
+function refreshCommunity(){
+return getStore().then(function(st3){return st3.list()}).then(function(arr){
+for(var i=D.length-1;i>=0;i--)if(D[i].c)D.splice(i,1);
+arr.forEach(function(c){
+if(!c||typeof c.id!=="number"||!c.n||!c.y)return;
+var y=String(c.y).replace(/[^A-Z]/g,"").slice(0,8);
+if(y.length<2||D.some(function(x){return x.y===y}))return;
+D.push({id:c.id,n:String(c.n).slice(0,30),y:y,g:Math.max(0,Math.min(4,+c.g||0)),p:typeof c.p==="number"?c.p:null,e:"paw",d:String(c.d||"").slice(0,400),c:true});
+});
+fillParents();render();
+}).catch(function(){fillParents()});
+}
+lb.addEventListener("click",function(){
+var nm=document.getElementById("n").value.trim(),sy=document.getElementById("y").value.trim().toUpperCase().replace(/[^A-Z]/g,""),ps=pe.value.trim();
+if(nm.length<2||sy.length<2||sy.length>8||ps.length<10){msg.textContent="Add a name (2+ characters), a symbol (2-8 letters) and a persona (10+ characters).";return}
+if(D.some(function(c){return c.y===sy})){msg.textContent="That symbol is taken. Try another.";return}
+var pid=pr.value?+pr.value:null,par=D.filter(function(c){return c.id===pid})[0];
+var cat={id:1000+Math.floor(Math.random()*1e9),n:nm.slice(0,30),y:sy,g:par?par.g+1:0,p:par?par.id:null,d:ps.slice(0,400),t:Date.now()};
+lb.disabled=true;msg.textContent="Launching\u2026";
+getStore().then(function(st3){return st3.add(cat)}).then(function(){
+msg.textContent="Your cat is in the pride! (Profile only. No token was created.)";
+return refreshCommunity();
+}).then(function(){document.getElementById("explore").scrollIntoView({behavior:"smooth"})}).catch(function(er){
+var c=er&&er.code;msg.textContent=c==="signin"?"Sign in to launch a cat.":c==="rate_limited"?"Too many launches. Try again later.":c==="taken"?"That symbol is taken. Try another.":"Launching is not available in this view."
+}).then(function(){lb.disabled=false});
+});
+fillParents();refreshCommunity();
+
+/* Contract + live market data (contract comes from /api/config, env CONTRACT) */
+var EVM=/^0x[a-fA-F0-9]{40}$/;
+function mcTxt(c){
+if(c.y!=="GCAT")return "Profile only \u00b7 no token";
+if(!CA)return "Token not launched yet";
+if(LIVE&&LIVE.mc){var v=LIVE.mc;return "$"+(v>=1e6?(v/1e6).toFixed(2)+"M":v>=1e3?(v/1e3).toFixed(1)+"K":Math.round(v))+" \u00b7 live"}
+return LURL?"See live on Pons":"Live data soon";
+}
+function showCA(){
+var el=document.getElementById("ca");if(!el)return;el.textContent="";
+if(!CA){el.textContent="Contract: TBA. $GCAT has not been launched yet. Any contract address you see elsewhere is not from us.";return}
+el.appendChild(document.createTextNode("Contract (Robinhood Chain): "));
+var code=h("code",null,CA);code.style.cssText="word-break:break-all;user-select:all";el.appendChild(code);el.appendChild(document.createTextNode(" "));
+var cp=h("button","chip","Copy");cp.type="button";cp.onclick=function(){try{navigator.clipboard.writeText(CA);cp.textContent="Copied"}catch(e){}};el.appendChild(cp);
+if(LURL){var a=h("a",null,"View on Pons");a.href=LURL;a.target="_blank";a.rel="noopener noreferrer";a.style.marginLeft="8px";el.appendChild(a)}
+}
+function loadLive(){
+fetch("https://api.dexscreener.com/latest/dex/tokens/"+CA).then(function(r){return r.json()}).then(function(j){
+var ps=(j.pairs||[]).filter(function(x){return x.baseToken&&String(x.baseToken.address).toLowerCase()===CA.toLowerCase()}).sort(function(a,b){return ((b.liquidity&&b.liquidity.usd)||0)-((a.liquidity&&a.liquidity.usd)||0)});
+if(ps[0]){LIVE={mc:ps[0].marketCap||ps[0].fdv||0};render()}
+}).catch(function(){});
+}
+fetch("/api/config").then(function(r){return r.ok?r.json():{}}).then(function(j){
+var c=String(j.contract||""),u=String(j.url||"");if(EVM.test(c))CA=c;if(/^https:\/\/[^\s"<>]+$/.test(u))LURL=u;showCA();if(CA){loadLive();render()}
+}).catch(showCA);
+setInterval(function(){if(CA)loadLive()},60000);
+
+var lm=document.getElementById("lm");if(lm)lm.appendChild(ic("granpa",32));
+var pl=document.getElementById("pile");
+if(pl)[["tuna",46],["hat",46],["granpa",72],["moon",46],["yarn",46]].forEach(function(a){var b=h("span","pb");b.style.width=b.style.height=(a[1]+14)+"px";b.appendChild(ic(a[0],a[1]));pl.appendChild(b)});
+
+/* Bottom bar: highlight active section */
+var tl=document.querySelectorAll(".tabs a");
+if(window.IntersectionObserver){var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){tl.forEach(function(a){a.className=a.getAttribute("href")==="#"+en.target.id?"on":""})}})},{rootMargin:"-40% 0px -55% 0px"});["explore","ask","launch","how"].forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el)})}
+})();
+</script>
+</body>
+</html>
